@@ -47,13 +47,10 @@ public class ContratServiceTest {
         String startDate = "2025-01-01";
         String endDate = "2025-12-31";
 
-        // Mock the repository method for calculating total salary
         when(contratRepository.calculateTotalSalary()).thenReturn(5000.00);
 
-        // Call the service method
         String result = contratService.calculateSalary(typeContrat, "total");
 
-        // Verify the result
         assertEquals("Le salaire total de tous les types de contrats et références est de 5000.00", result);
     }
 
@@ -61,52 +58,40 @@ public class ContratServiceTest {
     public void testCalculateAverageSalaryByType() {
         String typeContrat = "CDI";
 
-        // Mock the repository method for calculating average salary by type
         when(contratRepository.calculateAverageSalaryByType(typeContrat)).thenReturn(3000.00);
 
-        // Call the service method
         String result = contratService.calculateSalary(typeContrat, "average");
 
-        // Verify the result
         assertEquals("Le salaire moyen pour le contrat de type CDI est de 3000.00", result);
     }
 
     @Test
     public void testAddContrat() {
-        // Mock the repository to return the contrat we save
         when(contratRepository.save(contrat1)).thenReturn(contrat1);
 
-        // Call the service method
         Contrat result = contratService.add(contrat1);
 
-        // Verify the result
         assertNotNull(result);
         assertEquals(contrat1, result);
     }
 
     @Test
     public void testGetAllContrats() {
-        // Mock the repository to return a list of contrats
         List<Contrat> contrats = Arrays.asList(contrat1, contrat2);
         when(contratRepository.findAll()).thenReturn(contrats);
 
-        // Call the service method
         List<Contrat> result = contratService.getAll();
 
-        // Verify the result
         assertNotNull(result);
         assertEquals(2, result.size());
     }
 
     @Test
     public void testFilterBySalaire() {
-        // Mock the repository method for filtering contrats by salary
         when(contratRepository.findBySalaireGreaterThanEqual(2500)).thenReturn(Arrays.asList(contrat1));
 
-        // Call the service method
         List<Contrat> result = contratService.filterBySalaire(2500);
 
-        // Verify the result
         assertNotNull(result);
         assertEquals(1, result.size());
         assertEquals(contrat1, result.get(0));
